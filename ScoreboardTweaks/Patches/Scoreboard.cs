@@ -17,7 +17,7 @@ namespace ScoreboardTweaks.Patches
     {
         private static bool Prefix(GorillaScoreBoard __instance)
         {
-            __instance.boardText.text = "ROOM ID: " + ((PhotonNetwork.CurrentRoom == null || !PhotonNetwork.CurrentRoom.IsVisible) ? "-PRIVATE- GAME MODE: " : (PhotonNetwork.CurrentRoom.Name + "    GAME MODE: ")) + __instance.RoomType() + "\n  PLAYER STATUS            REPORT";
+            __instance.boardText.text = "ROOM ID: " + ((PhotonNetwork.CurrentRoom == null || !PhotonNetwork.CurrentRoom.IsVisible) ? "-PRIVATE- GAME MODE: " : (PhotonNetwork.CurrentRoom.Name + "    GAME MODE: ")) + __instance.RoomType() + "\nPLAYER                     REPORT";
             __instance.buttonText.text = "";
             for (int index = 0; index < __instance.lines.Count; ++index)
             {
@@ -35,7 +35,7 @@ namespace ScoreboardTweaks.Patches
     {
         //private static void Postfix(GorillaScoreBoard __instance)
         //{
-        //    __instance.boardText.text = "ROOM ID: " + ((PhotonNetwork.CurrentRoom == null || !PhotonNetwork.CurrentRoom.IsVisible) ? "-PRIVATE-" : PhotonNetwork.CurrentRoom.Name) + "\n  PLAYER STATUS            REPORT";
+        //    __instance.boardText.text = "ROOM ID: " + ((PhotonNetwork.CurrentRoom == null || !PhotonNetwork.CurrentRoom.IsVisible) ? "-PRIVATE-" : PhotonNetwork.CurrentRoom.Name) + "\nPLAYER                     REPORT";
         //}
         private static void Prefix(GorillaScoreBoard __instance)
         {
@@ -65,9 +65,9 @@ namespace ScoreboardTweaks.Patches
                     {
                         if (t.name == "Player Name")
                         {
-                            t.localPosition = new Vector3(-48.0f, 0.0f, 0.0f);
+                            t.localPosition = new Vector3(-54.0f, 0.0f, 0.0f);
                             t.gameObject.SetActive(true);
-                            //t.localScale = new Vector3(0.8f, 0.8f, 1.0f);
+                            t.localScale = new Vector3(0.8f, 0.8f, 1.0f);
                             continue;
                         }
                         if (t.name == "Color Swatch")
