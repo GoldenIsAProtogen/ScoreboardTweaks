@@ -45,7 +45,7 @@ namespace ScoreboardTweaks
         {
             if (PhotonNetwork.InRoom) foreach (var txt in m_listScoreboardTexts)
             {
-                txt.text = "ROOM ID: " + (!PhotonNetwork.CurrentRoom.IsVisible ? "-PRIVATE-" : (roomCode == null ? PhotonNetwork.CurrentRoom.Name : roomCode)) + "\n  PLAYER STATUS            REPORT";
+                txt.text = "ROOM ID: " + (!PhotonNetwork.CurrentRoom.IsVisible ? "-PRIVATE-" : (roomCode == null ? PhotonNetwork.CurrentRoom.Name : roomCode)) + "\nPLAYER                    REPORT";
             }
         }
 
