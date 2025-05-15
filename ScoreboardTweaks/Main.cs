@@ -19,7 +19,7 @@ namespace ScoreboardTweaks
         internal static Sprite m_spriteGizmoMuted = null;
         internal static Sprite m_spriteGizmoOriginal = null;
         internal static Material m_materialReportButtons = null;
-        public   static List<GorillaScoreBoard> m_listScoreboards = new List<GorillaScoreBoard>();
+        public static List<GorillaScoreBoard> m_listScoreboards = new List<GorillaScoreBoard>();
         internal static void Log(string msg) => m_hInstance.Logger.LogMessage(msg);
         void Awake()
         {
@@ -30,23 +30,53 @@ namespace ScoreboardTweaks
         {
             foreach (var plugin in Chainloader.PluginInfos.Values)
             {
-                try { AccessTools.Method(plugin.Instance.GetType(), "OnScoreboardTweakerStart")?.Invoke(plugin.Instance, new object[] { }); } catch { }
+                try
+                {
+                    AccessTools.Method(plugin.Instance.GetType(), "OnScoreboardTweakerStart")
+                        ?.Invoke(plugin.Instance, new object[] { });
+                }
+                catch { }
+            }
+            Texture2D tex = new Texture2D(2, 2);
+            var assembly = Assembly.GetExecutingAssembly();
+            string resourceName = "ScoreboardTweaks.Resources.gizmo-speaker-muted.png";
+            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            {
+                if (stream == null)
+                {
+                    Log("MutedGizmo icon not found!");
+                    return;
+                }
+
+                byte[] imageData;
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    stream.CopyTo(ms);
+                    imageData = ms.ToArray();
+                }
+
+                if (!tex.LoadImage(imageData))
+                {
+                    Log("Failed to load image.");
+                    return;
+                }
             }
 
-            Texture2D tex = new Texture2D(2, 2);
-            var file = new FileInfo(AssemblyDirectory + "/gizmo-speaker-muted.png");
-            if (!file.Exists) { Log("MutedGizmo icon file doesn`t exists!"); return; }
-            tex.LoadImage(File.ReadAllBytes(file.FullName));
+            if (tex.width < 512 || tex.height < 512)
+            {
+                Log($"MutedGizmo is too small! Size: {tex.width}x{tex.height}");
+                return;
+            }
 
-            m_spriteGizmoMuted = Sprite.Create(tex, new Rect(0.0f, 0.0f, 512.0f, 512.0f), new Vector2(0.5f, 0.5f), 100.0f);
+            m_spriteGizmoMuted = Sprite.Create(tex, new Rect(0, 0, 512, 512), new Vector2(0.5f, 0.5f), 100f);
             m_spriteGizmoMuted.name = "gizmo-speaker-muted";
         }
         public static void UpdateScoreboardTopText(string roomCode = null)
         {
             if (PhotonNetwork.InRoom) foreach (var txt in m_listScoreboardTexts)
-            {
-                txt.text = "ROOM ID: " + (!PhotonNetwork.CurrentRoom.IsVisible ? "-PRIVATE-" : (roomCode == null ? PhotonNetwork.CurrentRoom.Name : roomCode)) + "\nPLAYER                    REPORT";
-            }
+                {
+                    txt.text = "ROOM ID: " + (!PhotonNetwork.CurrentRoom.IsVisible ? "-PRIVATE-" : (roomCode == null ? PhotonNetwork.CurrentRoom.Name : roomCode)) + "\nPLAYER                     REPORT";
+                }
         }
 
         /* https://stackoverflow.com/questions/52797/how-do-i-get-the-path-of-the-assembly-the-code-is-in */
@@ -60,15 +90,13 @@ namespace ScoreboardTweaks
                 return Path.GetDirectoryName(path);
             }
         }
-    }
 
-    //[HarmonyPatch(typeof(GorillaNetworking.PhotonNetworkController))]
-    //[HarmonyPatch("AttemptDisconnect", MethodType.Normal)]
-    internal class OnRoomDisconnected
-    {
-        private static void Prefix()
+        internal class OnRoomDisconnected
         {
-            try { Main.m_listScoreboardTexts.Clear(); } catch { }
+            private static void Prefix()
+            {
+                try { Main.m_listScoreboardTexts.Clear(); } catch { }
+            }
         }
     }
 }
