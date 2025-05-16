@@ -42,12 +42,6 @@ namespace ScoreboardTweaks
             string resourceName = "ScoreboardTweaks.Resources.gizmo-speaker-muted.png";
             using (Stream stream = assembly.GetManifestResourceStream(resourceName))
             {
-                if (stream == null)
-                {
-                    Log("MutedGizmo icon not found!");
-                    return;
-                }
-
                 byte[] imageData;
                 using (MemoryStream ms = new MemoryStream())
                 {
@@ -57,17 +51,10 @@ namespace ScoreboardTweaks
 
                 if (!tex.LoadImage(imageData))
                 {
-                    Log("Failed to load image.");
+                    Log("Image didn't load :c");
                     return;
                 }
             }
-
-            if (tex.width < 512 || tex.height < 512)
-            {
-                Log($"MutedGizmo is too small! Size: {tex.width}x{tex.height}");
-                return;
-            }
-
             m_spriteGizmoMuted = Sprite.Create(tex, new Rect(0, 0, 512, 512), new Vector2(0.5f, 0.5f), 100f);
             m_spriteGizmoMuted.name = "gizmo-speaker-muted";
         }
