@@ -65,7 +65,7 @@ namespace ScoreboardTweaks.Patches
                     {
                         if (t.name == "Player Name")
                         {
-                            t.localPosition = new Vector3(-54.0f, 0.0f, 0.0f);
+                            t.localPosition = new Vector3(-60.0f, 0.0f, 0.0f);
                             t.gameObject.SetActive(true);
                             t.localScale = new Vector3(0.8f, 0.8f, 1.0f);
                             continue;
