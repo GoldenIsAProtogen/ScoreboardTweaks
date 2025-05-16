@@ -37,7 +37,7 @@ namespace ScoreboardTweaks
                 }
                 catch { }
             }
-            Texture2D tex = new Texture2D(2, 2);
+            Texture2D tex = new Texture2D(512, 512);
             var assembly = Assembly.GetExecutingAssembly();
             string resourceName = "ScoreboardTweaks.Resources.gizmo-speaker-muted.png";
             using (Stream stream = assembly.GetManifestResourceStream(resourceName))
