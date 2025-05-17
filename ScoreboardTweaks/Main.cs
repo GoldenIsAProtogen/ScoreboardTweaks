@@ -55,6 +55,9 @@ namespace ScoreboardTweaks
                     return;
                 }
             }
+            texture2D.filterMode = FilterMode.Point;
+			texture2D.wrapMode = TextureWrapMode.Clamp;
+			texture2D.Apply();
             m_spriteGizmoMuted = Sprite.Create(tex, new Rect(0, 0, 512, 512), new Vector2(0.5f, 0.5f), 100f);
             m_spriteGizmoMuted.name = "gizmo-speaker-muted";
         }
