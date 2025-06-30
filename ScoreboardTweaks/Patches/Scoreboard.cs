@@ -44,7 +44,7 @@ namespace ScoreboardTweaks.Patches
                 if (ScoreboardTweaks.Main.m_listScoreboards.Contains(__instance)) return;
                 ScoreboardTweaks.Main.m_listScoreboards.Add(__instance);
 
-                Main.m_listScoreboardTexts.Add(__instance.boardText);
+                // Main.m_listScoreboardTexts.Add(__instance.boardText);
                 __instance.boardText.transform.localPosition = new Vector3
                 (
                     __instance.boardText.transform.localPosition.x,
