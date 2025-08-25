@@ -17,7 +17,7 @@ namespace ScoreboardTweaks.Patches
     {
         private static bool Prefix(GorillaScoreBoard __instance)
         {
-            __instance.boardText.text = "ROOM ID: " + ((PhotonNetwork.CurrentRoom == null || !PhotonNetwork.CurrentRoom.IsVisible) ? "-PRIVATE- GAME MODE: " : (PhotonNetwork.CurrentRoom.Name + "    GAME MODE: ")) + __instance.RoomType() + "\nPLAYER                     REPORT";
+            __instance.boardText.text = "ROOM ID: " + ((PhotonNetwork.CurrentRoom == null || !PhotonNetwork.CurrentRoom.IsVisible) ? "-PRIVATE- MODE: " : (PhotonNetwork.CurrentRoom.Name + "    MODE: ")) + __instance.RoomType() + "\nPLAYER                     REPORT";
             __instance.buttonText.text = "";
             for (int index = 0; index < __instance.lines.Count; ++index)
             {
@@ -255,3 +255,4 @@ namespace ScoreboardTweaks.Patches
         }
     }
 }
+
