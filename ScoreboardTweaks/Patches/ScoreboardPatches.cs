@@ -274,7 +274,7 @@ namespace ScoreboardTweaks.Patches
                                 ButtonType.HateSpeech => new Vector3(11.5f, 0.0f, 0.0f),
                                 ButtonType.Toxicity   => new Vector3(25.5f, 0.0f, 0.0f),
                                 ButtonType.Cheating   => new Vector3(39.5f - 32.5f, 0.0f, 0.0f),
-                                ButtonType.Cancel     => new Vector3(2.5f - 32.5f, 0.0f, 0.0f),
+                                ButtonType.Cancel     => new Vector3(-2.5f - 32.5f, 0.0f, 0.0f),
                                 _ => new Vector3(30.0f, 0.0f, 0.0f)
                             };
                             child.localScale = new Vector3(child.localScale.x, child.localScale.y, 0.4f * child.localScale.z);
