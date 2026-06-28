@@ -159,7 +159,21 @@ namespace ScoreboardTweaks.Patches
                 Dictionary<object, TMP_Text> overrideTextDictionary = [];
                 Main.m_lineTextOverride.TryAdd(line, overrideTextDictionary);
 
-                foreach (Transform child in line.transform)
+                List<Transform> childrenToProcess = [];
+                foreach (Transform directChild in line.transform)
+                {
+                    if (directChild.name == "ReportButtons")
+                    {
+                        foreach (Transform submenuChild in directChild)
+                            childrenToProcess.Add(submenuChild);
+                    }
+                    else
+                    {
+                        childrenToProcess.Add(directChild);
+                    }
+                }
+
+                foreach (Transform child in childrenToProcess)
                 {
                     // Main.Logger.LogMessage($"{t.name}: [localPosition: {t.localPosition}]");
 
@@ -247,11 +261,20 @@ namespace ScoreboardTweaks.Patches
                         }
                         else
                         {
-                            child.localPosition = buttonType switch
+                            // Old positioning
+                            /*child.localPosition = buttonType switch
                             {
                                 ButtonType.HateSpeech => new Vector3(44.0f, 0.0f, 0.0f),
                                 ButtonType.Toxicity => new Vector3(58.0f, 0.0f, 0.0f),
                                 ButtonType.Cheating => new Vector3(72.0f, 0.0f, 0.0f),
+                                _ => new Vector3(30.0f, 0.0f, 0.0f)
+                            };*/
+                            child.localPosition = buttonType switch
+                            {
+                                ButtonType.HateSpeech => new Vector3(11.5f, 0.0f, 0.0f),
+                                ButtonType.Toxicity   => new Vector3(25.5f, 0.0f, 0.0f),
+                                ButtonType.Cheating   => new Vector3(39.5f - 32.5f, 0.0f, 0.0f),
+                                ButtonType.Cancel     => new Vector3(2.5f - 32.5f, 0.0f, 0.0f),
                                 _ => new Vector3(30.0f, 0.0f, 0.0f)
                             };
                             child.localScale = new Vector3(child.localScale.x, child.localScale.y, 0.4f * child.localScale.z);
